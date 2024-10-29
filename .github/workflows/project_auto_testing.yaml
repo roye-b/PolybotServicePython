@@ -7,16 +7,16 @@ on:
 permissions: {}
 
 jobs:
-  TestImgProcessingChatbotApp:
+  TestImgProcessingBotApp:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/checkout@v2
         with:
-          repository: exit-zero-academy/ImageProcessingChatBotProject
-          path: ImageProcessingChatBotProjectOriginal
+          repository: exit-zero-academy/PolybotServicePython
+          path: PolybotServicePythonOriginal
       - name: Copy test files
-        run: mv -f ImageProcessingChatBotProjectOriginal/polybot/test/* polybot/test/
+        run: mv -f PolybotServicePythonOriginal/polybot/test/* polybot/test/
       - name: Install dependencies
         run: |
           pip install -r polybot/requirements.txt
