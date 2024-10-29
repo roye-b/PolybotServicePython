@@ -1,5 +1,5 @@
-> [!IMPORTANT]
-> This project is part of the [DevOpsTheHardWay][DevOpsTheHardWay] course. Please [onboard the course][onboarding_tutorial] before starting. 
+> [!NOTE]
+> This project is part of the [DevOpsTheHardWay][DevOpsTheHardWay] course. 
 
 
 # The Polybot Service: Python Project [![][autotest_badge]][autotest_workflow]
@@ -214,8 +214,8 @@ It utilizes the Telegram Bot API to receive user images and respond with process
 The code skeleton for the bot app is already given to you under `polybot/app.py`.
 In order to run the server, you have to [provide 2 environment variables](https://www.jetbrains.com/help/objc/add-environment-variables-and-program-arguments.html#add-environment-variables):
 
-1. `TELEGRAM_TOKEN` which is your bot token.
-2. `TELEGRAM_APP_URL` which is your app public URL provided by Ngrok (will be discussed soon).
+1. `TELEGRAM_BOT_TOKEN` which is your bot token.
+2. `BOT_APP_URL` which is your app public URL provided by Ngrok (will be discussed soon).
 
 Implementing bot logic involves running a local Python script that listens for updates from Telegram servers.
 When a user sends a message to the bot, Telegram servers forward the message to the Python app using a method called **webhook** (**long-polling** and **websocket** are other possible methods which wouldn't be used in this project).
@@ -253,9 +253,13 @@ ngrok http 8443
 ```
 
 Your bot public URL is the URL specified in the `Forwarding` line (e.g. `https://16ae-2a06-c701-4501-3a00-ecce-30e9-3e61-3069.ngrok-free.app`).
-Don't forget to set the `TELEGRAM_APP_URL` env var to your URL. 
+Don't forget to set the `BOT_APP_URL` env var to your URL. 
 
 In the next step you'll finally run your bot app.
+
+> [!TIP]
+> If you want to keep the same URL each time you use ngrok, [create a static domain on your dashboard](https://dashboard.ngrok.com/cloud-edge/domains) and then use the `--url` flag to ask the ngrok agent to use it.
+
 
 ## Running a simple "echo" Bot - the `Bot` class
 
@@ -277,8 +281,10 @@ Upon incoming messages, this bot echoing the message while quoting the original 
 In `app.py`, change the instantiated instance to the `QuoteBot`:
 
 ```diff
-- Bot(TELEGRAM_TOKEN, TELEGRAM_APP_URL)
-+ QuoteBot(TELEGRAM_TOKEN, TELEGRAM_APP_URL)
+if __name__ == "__main__":
+-   bot = Bot(TELEGRAM_BOT_TOKEN, BOT_APP_URL)
++   bot = QuoteBot(TELEGRAM_BOT_TOKEN, BOT_APP_URL)
+    app.run(host='0.0.0.0', port=8443)
 ```
 
 Run this bot and check its behavior.
@@ -307,13 +313,11 @@ Test your bot on real photos and make sure it's functioning properly.
 
 ## Test your bot locally
 
-You can test your bot logic locally by:
+You can test your bot logic locally by executing the below unittests from the root directory of your project:
 
 ```bash
 python -m polybot.test.test_telegram_bot
 ```
-
-Or via the Pycharm UI. 
 
 
 ## Extend your bot functionality
@@ -340,7 +344,7 @@ Time to submit your solution for testing.
 
 You are highly encourages to share your project with others by creating a **Pull Request**.
 
-Create a Pull Request from your repo, branch `main` (e.g. `johndoe/ImageProcessingChatBotProject`) into our project repo (i.e. `exit-zero-academy/ImageProcessingChatBotProject`), branch `main`.  
+Create a Pull Request from your repo, branch `main` (e.g. `johndoe/PolybotServicePython`) into our project repo (i.e. `exit-zero-academy/PolybotServicePython`), branch `main`.  
 Feel free to explore other's pull requests to discover different solution approaches.
 
 As it's only an exercise, we may not approve your pull request (approval would lead your changes to be merged into our original project). 
@@ -350,8 +354,6 @@ As it's only an exercise, we may not approve your pull request (approval would l
 ## Good Luck
 
 [DevOpsTheHardWay]: https://github.com/exit-zero-academy/DevOpsTheHardWay
-[onboarding_tutorial]: https://github.com/exit-zero-academy/DevOpsTheHardWay/blob/main/tutorials/onboarding.md
-[BashProject]: https://github.com/exit-zero-academy/BashProject
 [autotest_badge]: ../../actions/workflows/project_auto_testing.yaml/badge.svg?event=push
 [autotest_workflow]: ../../actions/workflows/project_auto_testing.yaml/
 [fork_github]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo#forking-a-repository

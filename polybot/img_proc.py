@@ -65,3 +65,10 @@ class Img:
     def segment(self):
         # TODO remove the `raise` below, and write your implementation
         raise NotImplementedError()
+
+
+
+if __name__ == '__main__':
+    my_img = Img('/home/roye/PolybotServicePython/polybot/test/beatles.jpeg')
+    my_img.blur()
+    my_img.save_img()
