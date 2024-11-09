@@ -1,5 +1,6 @@
 from pathlib import Path
 from matplotlib.image import imread, imsave
+import random
 
 
 def rgb2gray(rgb):
@@ -52,23 +53,55 @@ class Img:
 
     def rotate(self):
         # TODO remove the `raise` below, and write your implementation
-        raise NotImplementedError()
+        n = []
+        for i in range(len(self.data)):
+            n.append([])
+            for j in range(0, len(self.data[i])):
+                r = len(self.data)
+                n[i].append(self.data[r-j-1][i])
+        self.data = n
+
+
+
+
 
     def salt_n_pepper(self):
         # TODO remove the `raise` below, and write your implementation
-        raise NotImplementedError()
+        for i in range (len(self.data)):
+            for j in range(0, len(self.data[i])):
+                x = random.uniform(0, 1)
+                if x < 0.2:
+                    self.data[i][j] = 255
+                if x > 0.8:
+                    self.data[i][j] = 0
+
+
+
+
+
 
     def concat(self, other_img, direction='horizontal'):
         # TODO remove the `raise` below, and write your implementation
-        raise NotImplementedError()
+        if len(self.data) == len(other_img.data):
+             for i in range (len(self.data)):
+                 self.data[i]=self.data[i]+other_img.data[i]
+        else:
+            raise RuntimeError("the")
+
 
     def segment(self):
         # TODO remove the `raise` below, and write your implementation
-        raise NotImplementedError()
+        for i in range(len(self.data)):
+            for j in range(0, len(self.data[i])):
+                if  self.data[i][j] <= 100:
+                    self.data[i][j] = 0
+                if  self.data[i][j] > 100:
+                    self.data[i][j] = 255
 
 
 
 if __name__ == '__main__':
     my_img = Img('/home/roye/PolybotServicePython/polybot/test/beatles.jpeg')
-    my_img.blur()
+    my_img.segment()
     my_img.save_img()
+
