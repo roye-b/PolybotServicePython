@@ -107,6 +107,45 @@ class ImageProcessingBot(Bot):
         if my_img is not None:
             self.send_photo(msg["chat"]["id"], my_img.save_img())
 
+    def download_user_photo(self, msg):
+        """
+        Downloads the photos that were sent to the Bot to the `photos` directory (should exist)
+        :return: file path
+        """
+        try:
+            if not self.is_current_msg_photo(msg):
+                raise RuntimeError('Message content of type "photo" expected')
+
+            file_info = self.telegram_bot_client.get_file(msg['photo'][-1]['file_id'])
+            data = self.telegram_bot_client.download_file(file_info.file_path)
+            folder_name = file_info.file_path.split('/')[0]
+
+            if not os.path.exists(folder_name):
+                os.makedirs(folder_name)
+
+            with open(file_info.file_path, 'wb') as photo:
+                photo.write(data)
+
+            return file_info.file_path
+
+        except Exception as e:
+            logger.error(f"Error downloading photo: {e}")
+            return None
+
+    def handle_message(self, msg):
+        """
+        Bot Main message handler with error handling.
+        """
+        try:
+            logger.info(f'Incoming message: {msg}')
+            self.send_text(msg['chat']['id'], f'Your original message: {msg["text"]}')
+        except KeyError as e:
+            logger.error(f"Key error in message: {e}")
+        except Exception as e:
+            logger.error(f"Unexpected error handling message: {e}")
+
+
+
 
 
 
