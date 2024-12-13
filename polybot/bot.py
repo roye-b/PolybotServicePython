@@ -79,33 +79,33 @@ class ImageProcessingBot(Bot):
         logger.info(f'Incoming message: {msg}')
         try:
             my_img=None
-            if msg["caption"] =="Salt and pepper":
+            elif msg["caption"] =="Salt and pepper":
                 image_path = self.download_user_photo(msg)
                 my_img = Img(image_path)
                 my_img.salt_n_pepper()
-            if msg["caption"] =="Segment":
+            elif msg["caption"] =="Segment":
                 image_path = self.download_user_photo(msg)
                 my_img = Img(image_path)
                 my_img.segment()
-            if msg["caption"] =="Contour":
+            elif msg["caption"] =="Contour":
                 image_path = self.download_user_photo(msg)
                 my_img = Img(image_path)
                 my_img.contour()
-            if msg["caption"] =="Blur":
+            elif msg["caption"] =="Blur":
                 image_path = self.download_user_photo(msg)
                 my_img = Img(image_path)
                 my_img.blur()
-            if msg["caption"] == "Concat":
+            elif msg["caption"] == "Concat":
                 image_path = self.download_user_photo(msg)
                 my_img = Img(image_path)
                 image_path2 = self.download_user_photo(msg)
                 another_img = Img(image_path2)
                 my_img.concat(another_img)
-            if msg["caption"] == "Rotate":
+            elif msg["caption"] == "Rotate":
                 image_path = self.download_user_photo(msg)
                 my_img = Img(image_path)
                 my_img.rotate()
-            if my_img is not None:
+            elif my_img is not None:
                 self.send_photo(msg["chat"]["id"], my_img.save_img())
         except KeyError as ke:
             logger.error(f"Missing key in message: {ke}")
