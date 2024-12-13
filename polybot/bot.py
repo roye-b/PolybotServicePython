@@ -78,46 +78,46 @@ class ImageProcessingBot(Bot):
     def handle_message(self, msg):
         logger.info(f'Incoming message: {msg}')
         try:
-        my_img=None
-        if msg["caption"] =="Salt and pepper":
+            my_img=None
+            if msg["caption"] =="Salt and pepper":
             image_path = self.download_user_photo(msg)
             my_img = Img(image_path)
             my_img.salt_n_pepper()
-        if msg["caption"] =="Segment":
+            if msg["caption"] =="Segment":
             image_path = self.download_user_photo(msg)
             my_img = Img(image_path)
             my_img.segment()
-        if msg["caption"] =="Contour":
+            if msg["caption"] =="Contour":
             image_path = self.download_user_photo(msg)
             my_img = Img(image_path)
             my_img.contour()
-        if msg["caption"] =="Blur":
+            if msg["caption"] =="Blur":
             image_path = self.download_user_photo(msg)
             my_img = Img(image_path)
             my_img.blur()
-        if msg["caption"] == "Concat":
+            if msg["caption"] == "Concat":
             image_path = self.download_user_photo(msg)
             my_img = Img(image_path)
             image_path2 = self.download_user_photo(msg)
             another_img = Img(image_path2)
             my_img.concat(another_img)
-        if msg["caption"] == "Rotate":
+            if msg["caption"] == "Rotate":
             image_path = self.download_user_photo(msg)
             my_img = Img(image_path)
             my_img.rotate()
-        if my_img is not None:
+            if my_img is not None:
             self.send_photo(msg["chat"]["id"], my_img.save_img())
 
-    except KeyError as ke:
-    logger.error(f"Missing key in message: {ke}")
-    self.send_message(msg["chat"]["id"], "An error occurred: Missing required data in the message.")
+        except KeyError as ke:
+        logger.error(f"Missing key in message: {ke}")
+        self.send_message(msg["chat"]["id"], "An error occurred: Missing required data in the message.")
 
-    except FileNotFoundError as fnfe:
-    logger.error(f"File not found: {fnfe}")
-    self.send_message(msg["chat"]["id"], "An error occurred: Unable to find the file.")
-    except Exception as e:
-    logger.error(f"An unexpected error occurred: {e}")
-    self.send_message(msg["chat"]["id"], "An unexpected error occurred. Please try again.")
+        except FileNotFoundError as fnfe:
+        logger.error(f"File not found: {fnfe}")
+        self.send_message(msg["chat"]["id"], "An error occurred: Unable to find the file.")
+        except Exception as e:
+        logger.error(f"An unexpected error occurred: {e}")
+        self.send_message(msg["chat"]["id"], "An unexpected error occurred. Please try again.")
 
 
 
