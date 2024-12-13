@@ -107,18 +107,15 @@ class ImageProcessingBot(Bot):
                 my_img.rotate()
             if my_img is not None:
                 self.send_photo(msg["chat"]["id"], my_img.save_img())
-
         except KeyError as ke:
-        logger.error(f"Missing key in message: {ke}")
-        self.send_message(msg["chat"]["id"], "An error occurred: Missing required data in the message.")
-
+            logger.error(f"Missing key in message: {ke}")
+            self.send_message(msg["chat"]["id"], "An error occurred: Missing required data in the message.")
         except FileNotFoundError as fnfe:
-        logger.error(f"File not found: {fnfe}")
-        self.send_message(msg["chat"]["id"], "An error occurred: Unable to find the file.")
+            logger.error(f"File not found: {fnfe}")
+            self.send_message(msg["chat"]["id"], "An error occurred: Unable to find the file.")
         except Exception as e:
-        logger.error(f"An unexpected error occurred: {e}")
-        self.send_message(msg["chat"]["id"], "An unexpected error occurred. Please try again.")
-
+            logger.error(f"An unexpected error occurred: {e}")
+            self.send_message(msg["chat"]["id"], "An unexpected error occurred. Please try again.")
 
 
 
