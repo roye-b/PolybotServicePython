@@ -79,33 +79,33 @@ class ImageProcessingBot(Bot):
         logger.info(f'Incoming message: {msg}')
         try:
             my_img=None
-            elif msg["caption"] =="Salt and pepper":
+            if msg["caption"] =="Salt and pepper":
                 image_path = self.download_user_photo(msg)
                 my_img = Img(image_path)
                 my_img.salt_n_pepper()
-            elif msg["caption"] =="Segment":
+            if msg["caption"] =="Segment":
                 image_path = self.download_user_photo(msg)
                 my_img = Img(image_path)
                 my_img.segment()
-            elif msg["caption"] =="Contour":
+            if msg["caption"] =="Contour":
                 image_path = self.download_user_photo(msg)
                 my_img = Img(image_path)
                 my_img.contour()
-            elif msg["caption"] =="Blur":
+            if msg["caption"] =="Blur":
                 image_path = self.download_user_photo(msg)
                 my_img = Img(image_path)
                 my_img.blur()
-            elif msg["caption"] == "Concat":
+            if msg["caption"] == "Concat":
                 image_path = self.download_user_photo(msg)
                 my_img = Img(image_path)
                 image_path2 = self.download_user_photo(msg)
                 another_img = Img(image_path2)
                 my_img.concat(another_img)
-            elif msg["caption"] == "Rotate":
+            if msg["caption"] == "Rotate":
                 image_path = self.download_user_photo(msg)
                 my_img = Img(image_path)
                 my_img.rotate()
-            elif my_img is not None:
+            if my_img is not None:
                 self.send_photo(msg["chat"]["id"], my_img.save_img())
         except KeyError as ke:
             logger.error(f"Missing key in message: {ke}")
@@ -116,43 +116,6 @@ class ImageProcessingBot(Bot):
         except Exception as e:
             logger.error(f"An unexpected error occurred: {e}")
             self.send_message(msg["chat"]["id"], "An unexpected error occurred. Please try again.")
-
-        def send_message(self, chat_id, text):
-            """Send a message to the user."""
-            logger.info(f"Sending message to chat {chat_id}: {text}")
-            # Replace this with actual implementation to send a message via Telegram API or another service
-
-        def download_user_photo(self, msg):
-            """Download a user's photo and return the file path."""
-            file_path = "/tmp/"  # Temporary directory for storing images
-            if not os.path.exists(file_path):
-                os.makedirs(file_path)
-
-            file_info = self.get_file_info(msg["photo"])
-            full_path = os.path.join(file_path, file_info.file_name)
-
-            try:
-                with open(full_path, 'wb') as photo:
-                    photo.write(file_info.file_data)
-            except OSError as e:
-                logger.error(f"Error writing to file {full_path}: {e}")
-                raise
-
-            return full_path
-
-        def get_file_info(self, photo):
-            """Mock method to get file information. Replace with real implementation."""
-
-            class FileInfo:
-                file_name = "user_photo.jpg"
-                file_data = b"fake_image_data"
-
-            return FileInfo()
-
-        def send_photo(self, chat_id, image_path):
-            """Send a photo to the user."""
-            logger.info(f"Sending photo from {image_path} to chat {chat_id}")
-            # Replace this with the actual implementation to send a photo via Telegram API or another service
 
 
 
