@@ -130,9 +130,7 @@ class ImageProcessingBot(Bot):
         except FileNotFoundError as fnfe:
             logger.error(f"File not found: {fnfe}")
             self.send_message(msg["chat"]["id"], "An error occurred: Unable to find the file.")
-        except Exception as e:
-            logger.error(f"An unexpected error occurred: {e}")
-            self.send_message(msg["chat"]["id"], "An unexpected error occurred. Please try again.")
+
 
 
 
