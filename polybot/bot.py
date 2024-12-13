@@ -75,22 +75,6 @@ class QuoteBot(Bot):
 
 
 class ImageProcessingBot(Bot):
-    def send_message(self, chat_id, text):
-        # מתודה לשליחת הודעות (שיפור בהתאם למימוש הבוט שלך)
-        logger.info(f"Sending message to chat {chat_id}: {text}")
-        # כאן תוסיף את הקוד לשליחת הודעה בפועל, לדוגמה:
-        # self.api.send_message(chat_id=chat_id, text=text)
-
-    def send_photo(self, chat_id, photo_path):
-        # מתודה לשליחת תמונה (שיפור בהתאם למימוש הבוט שלך)
-        logger.info(f"Sending photo to chat {chat_id}: {photo_path}")
-        # כאן תוסיף את הקוד לשליחת תמונה בפועל
-
-    def download_user_photo(self, msg):
-        # מתודה להורדת תמונה מהמשתמש (שיפור בהתאם למימוש הבוט שלך)
-        logger.info("Downloading user photo...")
-        # כאן תוסיף את הלוגיקה המתאימה
-
     def handle_message(self, msg):
         logger.info(f'Incoming message: {msg}')
         try:
