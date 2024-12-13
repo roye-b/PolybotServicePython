@@ -110,13 +110,13 @@ class ImageProcessingBot(Bot):
                 self.send_photo(msg["chat"]["id"], my_img.save_img())
         except KeyError as ke:
             logger.error(f"Missing key in message: {ke}")
-            self.send_message(msg["chat"]["id"], "An error occurred: Missing required data in the message.")
+            self.send_text(msg["chat"]["id"], "An error occurred: Missing required data in the message.")
         except FileNotFoundError as fnfe:
             logger.error(f"File not found: {fnfe}")
-            self.send_message(msg["chat"]["id"], "An error occurred: Unable to find the file.")
+            self.send_text(msg["chat"]["id"], "An error occurred: Unable to find the file.")
         except Exception as e:
             logger.error(f"An unexpected error occurred: {e}")
-            self.send_message(msg["chat"]["id"], "An unexpected error occurred. Please try again.")
+            self.send_text(msg["chat"]["id"], "An unexpected error occurred. Please try again.")
 
 
 
