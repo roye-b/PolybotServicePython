@@ -111,13 +111,13 @@ class ImageProcessingBot(Bot):
                 image_path = self.download_user_photo(msg)
                 my_img = Img(image_path)
                 my_img.blur()
-            elif msg["caption"] == "Concat":
+            if msg["caption"] == "Concat":
                 image_path = self.download_user_photo(msg)
                 my_img = Img(image_path)
                 image_path2 = self.download_user_photo(msg)
                 another_img = Img(image_path2)
                 my_img.concat(another_img)
-            elif msg["caption"] == "Rotate":
+            if msg["caption"] == "Rotate":
                 image_path = self.download_user_photo(msg)
                 my_img = Img(image_path)
                 my_img.rotate()
